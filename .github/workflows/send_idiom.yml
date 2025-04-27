@@ -1,9 +1,9 @@
-name: Send Idiom Every Minute (for testing)
+name: Send Idiom
 
 on:
   schedule:
-    - cron: '*/1 * * * *'  # Mỗi 1 phút
-  workflow_dispatch:        # Cho phép bạn chạy tay nếu muốn test
+    - cron: '*/1 * * * *'  # ⬅️ Chạy tự động mỗi phút
+  workflow_dispatch:         # ⬅️ Cho phép bấm tay nếu cần
 
 jobs:
   send_idiom:
