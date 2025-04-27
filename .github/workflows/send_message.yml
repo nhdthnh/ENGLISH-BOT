@@ -6,7 +6,7 @@ on:
   workflow_dispatch:         # ⬅️ Cho phép bấm tay nếu cần
 
 jobs:
-  send_idiom:
+  send_message:
     runs-on: ubuntu-latest
 
     steps:
