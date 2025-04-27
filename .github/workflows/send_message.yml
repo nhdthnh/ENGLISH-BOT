@@ -1,4 +1,4 @@
-name: Send Idiom
+name: Send Message
 
 on:
   schedule:
@@ -29,3 +29,4 @@ jobs:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       run: |
         python bot.py
+        python vocab.py

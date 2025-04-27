@@ -18,7 +18,7 @@ async def send_to_telegram(message):
 
 async def get_idiom():
     prompt = """
-    Pick a truly random English idiom that is not one of the top 50 most common idioms. 
+    Pick a truly random English idiom and different from previous idioms. 
     For the idiom, provide:
     - The idiom phrase
     - A short meaning explanation (in Vietnamese)
