@@ -18,26 +18,27 @@ async def send_to_telegram(message):
 
 async def get_idiom():
     prompt = """
-    Give me one random English idiom.
+    Pick a truly random English idiom that is not one of the top 50 most common idioms. 
     For the idiom, provide:
     - The idiom phrase
     - A short meaning explanation (in Vietnamese)
     - One example sentence in English.
-    
-    Format the output clearly as:
-    Idiom: <idiom>
-    Meaning: <meaning in Vietnamese>
-    Example: <example sentence in English>
+
+Format the output clearly:
+Idiom: <idiom>
+Meaning: <meaning in Vietnamese>
+Example: <example sentence in English>
     """
 
     response = await openai_client.chat.completions.create(
         model="gpt-4o",
         messages=[{"role": "user", "content": prompt}],
-        temperature=0.7,
+        temperature=1.0,   # <--- tăng lên
         max_tokens=300
     )
     text = response.choices[0].message.content.strip()
     return text
+
 
 if __name__ == '__main__':
     async def main():
