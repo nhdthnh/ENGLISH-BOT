@@ -24,25 +24,25 @@ async def get_idiom():
 
     For each word, provide:
 
-    - **Word**: <word>
-    - **Part of speech**: <part of speech> (e.g., noun, verb, adjective, adverb)
-    - **Word family**: <related forms> (e.g., noun, verb, adjective, adverb variations)
-    - **Synonyms**: <common synonyms>
-    - **Antonyms**: <common antonyms>
-    - **Meaning (English)**: <short meaning in easy English>
-    - **Meaning (Vietnamese)**: <short meaning in Vietnamese>
-    - **Example**: <example sentence in English>
+    Word: <word>
+    Part of speech: <part of speech> (e.g., noun, verb, adjective, adverb)
+    Word family: <related forms> (e.g., noun, verb, adjective, adverb variations)
+    Synonyms: <common synonyms>
+    Antonyms: <common antonyms>
+    Meaning (English): <short meaning in easy English>
+    Meaning (Vietnamese): <short meaning in Vietnamese>
+    Example: <example sentence in English>
 
     ### Format example:
 
-    - **Word**: confident
-    - **Part of speech**: adjective
-    - **Word family**: confidence (noun), confidently (adverb)
-    - **Synonyms**: self-assured, positive, assertive
-    - **Antonyms**: insecure, doubtful, shy
-    - **Meaning (English)**: feeling sure about yourself and your abilities
-    - **Meaning (Vietnamese)**: cảm thấy chắc chắn về bản thân và khả năng của mình
-    - **Example**: She felt confident before the important presentation.
+    Word: confident
+    Part of speech: adjective
+    Word family: confidence (noun), confidently (adverb)
+    Synonyms: self-assured, positive, assertive
+    Antonyms: insecure, doubtful, shy
+    Meaning (English): feeling sure about yourself and your abilities
+    Meaning (Vietnamese): cảm thấy chắc chắn về bản thân và khả năng của mình
+    Example: She felt confident before the important presentation.
 
     """
 
