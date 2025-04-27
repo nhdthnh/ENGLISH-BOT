@@ -1,0 +1,6 @@
+# Bỏ qua file môi trường
+.env
+
+# Bỏ qua thư mục cache của Python
+__pycache__/
+*.py[cod]
