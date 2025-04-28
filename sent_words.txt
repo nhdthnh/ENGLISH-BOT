@@ -2,3 +2,4 @@ negotiate
 ponder
 persist
 cautious
+inquire
