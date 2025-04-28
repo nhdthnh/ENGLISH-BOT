@@ -4,3 +4,4 @@ persist
 cautious
 inquire
 diligent
+adapt
