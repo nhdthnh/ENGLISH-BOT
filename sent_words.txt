@@ -3,3 +3,4 @@ ponder
 persist
 cautious
 inquire
+diligent
