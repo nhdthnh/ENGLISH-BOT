@@ -12,3 +12,4 @@ allocate
 resource
 resilient
 consensus
+absorb
