@@ -9,3 +9,4 @@ brisk
 enhance
 reliable
 allocate
+resource
