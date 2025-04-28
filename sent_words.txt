@@ -6,3 +6,4 @@ inquire
 diligent
 adapt
 brisk
+enhance
