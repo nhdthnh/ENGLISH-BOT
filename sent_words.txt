@@ -11,3 +11,4 @@ reliable
 allocate
 resource
 resilient
+consensus
