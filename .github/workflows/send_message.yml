@@ -2,8 +2,8 @@ name: Send Message
 
 on:
   schedule:
-    - cron: '*/1 * * * *'  # ⬅️ Chạy tự động mỗi phút
-  workflow_dispatch:         # ⬅️ Cho phép bấm tay nếu cần
+    - cron: '0 */2 * * *'
+  workflow_dispatch:         # Cho phép bấm tay nếu cần
 
 jobs:
   send_message:
@@ -20,7 +20,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install -r requirements.txt
+        pip install -r requirements.txt   
 
     - name: Run bot
       env:
@@ -30,3 +30,17 @@ jobs:
       run: |
         python bot.py
         python vocab.py
+
+    - name: Configure Git
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+    - name: Commit and push changes
+      run: |
+        git add sent_idioms.txt
+        git add sent_words.txt
+        git commit -m "Update sent idioms list" || echo "No changes to commit"
+        git push origin main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

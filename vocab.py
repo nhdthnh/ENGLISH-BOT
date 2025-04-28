@@ -2,21 +2,29 @@ import openai
 import telegram
 import os
 import asyncio
-from openai import AsyncOpenAI  # Thêm dòng này
+import re
+from openai import AsyncOpenAI
 
 # Load từ environment
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 CHAT_ID = os.getenv('CHAT_ID')
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
-# Tạo client mới
+WORDS_FILE = "sent_words.txt"  # File lưu từ đã gửi
+
+# Tạo client OpenAI
 openai_client = AsyncOpenAI(api_key=OPENAI_API_KEY)
 
-async def send_to_telegram(message):
+async def send_text_to_telegram(message):
     bot = telegram.Bot(token=BOT_TOKEN)
     await bot.send_message(chat_id=CHAT_ID, text=message)
 
-async def get_idiom():
+async def send_voice_to_telegram(file_path):
+    bot = telegram.Bot(token=BOT_TOKEN)
+    with open(file_path, 'rb') as audio_file:
+        await bot.send_voice(chat_id=CHAT_ID, voice=audio_file)
+
+async def get_word_message():
     prompt = """
     ## Vocabulary Builder Prompt (IELTS / TOEIC / Daily English)
 
@@ -52,23 +60,71 @@ async def get_idiom():
 
     Example: She felt confident before the important presentation.
 
-    
     Thực hiện xuống dòng theo format tôi đã đề ra để tin nhắn dễ nhìn hơn
     """
 
     response = await openai_client.chat.completions.create(
         model="gpt-4o",
         messages=[{"role": "user", "content": prompt}],
-        temperature=1.0,   # <--- tăng lên
-        max_tokens=300
+        temperature=1.0,
+        max_tokens=400
     )
     text = response.choices[0].message.content.strip()
     return text
 
+def extract_word(text):
+    # Tìm dòng bắt đầu bằng "Word:" và lấy nội dung sau nó
+    match = re.search(r"Word:\s*(\w+)", text)
+    if match:
+        word = match.group(1).strip().lower()
+        return word
+    return None
+
+async def text_to_speech(text, output_path):
+    response = await openai_client.audio.speech.create(
+        model="tts-1",
+        voice="nova",  # Hoặc onyx, echo, shimmer
+        input=text
+    )
+    with open(output_path, "wb") as f:
+        f.write(response.content)
+
+def load_sent_words():
+    if not os.path.exists(WORDS_FILE):
+        return set()
+    with open(WORDS_FILE, "r", encoding="utf-8") as f:
+        return set(line.strip().lower() for line in f.readlines())
+
+def save_word(word):
+    with open(WORDS_FILE, "a", encoding="utf-8") as f:
+        f.write(word + "\n")
 
 if __name__ == '__main__':
     async def main():
-        idiom_message = await get_idiom()
-        await send_to_telegram(idiom_message)
+        sent_words = load_sent_words()
+
+        retries = 5
+        for _ in range(retries):
+            word_message = await get_word_message()
+            word = extract_word(word_message)
+
+            if word and word not in sent_words:
+                # Gửi text lên Telegram
+                await send_text_to_telegram(word_message)
+
+                # Gửi voice đọc Word
+                audio_file = "word_voice.mp3"
+                await text_to_speech(word, audio_file)
+                await send_voice_to_telegram(audio_file)
+                os.remove(audio_file)
+
+                # Ghi vào danh sách đã gửi
+                save_word(word)
+                break
+            else:
+                print("Trùng từ, đang thử lại...")
+
+        else:
+            print("Không tìm được từ mới sau nhiều lần thử.")
 
     asyncio.run(main())
