@@ -8,3 +8,4 @@ adapt
 brisk
 enhance
 reliable
+allocate
