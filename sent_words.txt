@@ -24,3 +24,4 @@ curious
 establish
 accumulate
 evaluate
+reluctant
