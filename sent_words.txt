@@ -19,3 +19,4 @@ benefit
 durable
 collaborate
 elaborate
+intricate
