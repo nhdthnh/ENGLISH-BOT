@@ -20,3 +20,4 @@ durable
 collaborate
 elaborate
 intricate
+curious
