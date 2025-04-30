@@ -26,3 +26,4 @@ accumulate
 evaluate
 reluctant
 perseverance
+deliberate
