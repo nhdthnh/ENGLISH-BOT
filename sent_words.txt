@@ -25,3 +25,4 @@ establish
 accumulate
 evaluate
 reluctant
+perseverance
