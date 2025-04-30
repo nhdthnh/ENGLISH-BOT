@@ -35,3 +35,4 @@ emphasize
 persistent
 analyze
 amplify
+meticulous
