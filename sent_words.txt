@@ -32,3 +32,4 @@ essential
 flexible
 exhibit
 emphasize
+persistent
