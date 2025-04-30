@@ -27,3 +27,4 @@ evaluate
 reluctant
 perseverance
 deliberate
+stimulate
