@@ -33,3 +33,4 @@ flexible
 exhibit
 emphasize
 persistent
+analyze
