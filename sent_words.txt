@@ -34,3 +34,4 @@ exhibit
 emphasize
 persistent
 analyze
+amplify
