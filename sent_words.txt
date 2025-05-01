@@ -43,3 +43,4 @@ assess
 venture
 observe
 calculate
+manage
