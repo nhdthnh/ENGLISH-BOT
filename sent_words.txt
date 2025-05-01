@@ -42,3 +42,4 @@ endure
 assess
 venture
 observe
+calculate
