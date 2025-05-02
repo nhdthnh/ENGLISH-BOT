@@ -49,3 +49,4 @@ clarify
 inhibit
 estimate
 maintain
+expand
