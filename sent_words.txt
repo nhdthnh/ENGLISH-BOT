@@ -56,3 +56,4 @@ thrive
 significant
 commence
 alleviate
+obstacle
