@@ -3,8 +3,7 @@ import telegram
 import os
 import asyncio
 import re
-
-from openai import AsyncOpenAI
+from gtts import gTTS
 
 # Load từ environment
 BOT_TOKEN = os.getenv('BOT_TOKEN')
@@ -13,8 +12,8 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 IDIOMS_FILE = "sent_idioms.txt"
 
-# Tạo client
-openai_client = AsyncOpenAI(api_key=OPENAI_API_KEY)
+# Set OpenAI API key
+openai.api_key = OPENAI_API_KEY
 
 async def send_text_to_telegram(message):
     bot = telegram.Bot(token=BOT_TOKEN)
@@ -33,13 +32,8 @@ def extract_idiom(text):
     return None
 
 async def text_to_speech(text, output_path):
-    response = await openai_client.audio.speech.create(
-        model="tts-1",
-        voice="nova",
-        input=text
-    )
-    with open(output_path, "wb") as f:
-        f.write(response.content)
+    tts = gTTS(text, lang='en')
+    tts.save(output_path)
 
 def load_sent_idioms():
     if not os.path.exists(IDIOMS_FILE):
@@ -64,8 +58,8 @@ Idiom: <idiom>
 Meaning: <meaning in Vietnamese>
 Example: <example sentence in English>
     """
-    response = await openai_client.chat.completions.create(
-        model="gpt-4o",
+    response = await openai.ChatCompletion.acreate(
+        model="gpt-3.5-turbo",
         messages=[{"role": "user", "content": prompt}],
         temperature=1.0,
         max_tokens=300
@@ -76,7 +70,7 @@ Example: <example sentence in English>
 async def main():
     sent_idioms = load_sent_idioms()
 
-    retries = 5
+    retries = 1000
     for _ in range(retries):
         idiom_message = await get_idiom()
         idiom_text = extract_idiom(idiom_message)

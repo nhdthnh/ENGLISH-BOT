@@ -22,13 +22,20 @@ jobs:
       run: |
         pip install -r requirements.txt   
 
-    - name: Run bot
+    - name: Run idioms
       env:
         BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
         CHAT_ID: ${{ secrets.CHAT_ID }}
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       run: |
         python bot.py
+        
+    - name: Run vocabs
+      env:
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        CHAT_ID: ${{ secrets.CHAT_ID }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      run: |
         python vocab.py
 
     - name: Configure Git

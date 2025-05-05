@@ -3,7 +3,7 @@ import telegram
 import os
 import asyncio
 import re
-from openai import AsyncOpenAI
+from gtts import gTTS
 
 # Load từ environment
 BOT_TOKEN = os.getenv('BOT_TOKEN')
@@ -12,8 +12,8 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 WORDS_FILE = "sent_words.txt"  # File lưu từ đã gửi
 
-# Tạo client OpenAI
-openai_client = AsyncOpenAI(api_key=OPENAI_API_KEY)
+# Set OpenAI API key
+openai.api_key = OPENAI_API_KEY
 
 async def send_text_to_telegram(message):
     bot = telegram.Bot(token=BOT_TOKEN)
@@ -63,8 +63,8 @@ async def get_word_message():
     Thực hiện xuống dòng theo format tôi đã đề ra để tin nhắn dễ nhìn hơn
     """
 
-    response = await openai_client.chat.completions.create(
-        model="gpt-4o",
+    response = await openai.ChatCompletion.acreate(
+        model="gpt-3.5-turbo",
         messages=[{"role": "user", "content": prompt}],
         temperature=1.0,
         max_tokens=400
@@ -81,13 +81,8 @@ def extract_word(text):
     return None
 
 async def text_to_speech(text, output_path):
-    response = await openai_client.audio.speech.create(
-        model="tts-1",
-        voice="nova",  # Hoặc onyx, echo, shimmer
-        input=text
-    )
-    with open(output_path, "wb") as f:
-        f.write(response.content)
+    tts = gTTS(text, lang='en')
+    tts.save(output_path)
 
 def load_sent_words():
     if not os.path.exists(WORDS_FILE):
@@ -103,7 +98,7 @@ if __name__ == '__main__':
     async def main():
         sent_words = load_sent_words()
 
-        retries = 5
+        retries = 1000
         for _ in range(retries):
             word_message = await get_word_message()
             word = extract_word(word_message)
