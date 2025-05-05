@@ -2,7 +2,7 @@ name: Bot Send
 
 on:
   schedule:
-    - cron: '* /30 * * * *'
+    - cron: '* * * * *'
   workflow_dispatch:         # Cho phép bấm tay nếu cần
 
 jobs:
