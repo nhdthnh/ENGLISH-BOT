@@ -1,0 +1,31 @@
+name: Bot Send
+
+on:
+  schedule:
+    - cron: '* /30 * * * *'
+  workflow_dispatch:         # Cho phép bấm tay nếu cần
+
+jobs:
+  send_message:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt   
+
+    - name: Run idioms
+      env:
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        CHAT_ID: ${{ secrets.CHAT_ID }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      run: |
+        python chatgpt_bot.py
